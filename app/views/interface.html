@@ -1,0 +1,391 @@
+<!-- Extends the layout from /views/layout.html -->
+{% extends 'layout.html' %}
+<!-- 
+  In /views/layout.html you can:
+    - change the header and footer 
+    - add custom CSS and JavaScript
+  -->
+
+  <!-- Set the page title inside the pageTitle block -->
+  {% block pageTitle %}
+  UEC NLP User Interface 
+  {% endblock %}
+
+  <!-- Breadcrumb goes inside the beforeContent block -->
+  <!-- More info and code for the breadcrumb can be found at https://beta.nhs.uk/service-manual/styles-components-patterns/breadcrumbs -->
+  {% block beforeContent %}
+  {{ breadcrumb({
+    href: "/",
+    text: "Home"
+  }) }}
+  {% endblock %}
+
+  <!-- Your page content goes inside the content block -->
+  <!-- More info and code for the page layout can be found at https://beta.nhs.uk/service-manual/styles-components-patterns/layout -->
+  {% block content %}
+
+  <div class="nhsuk-grid-row">
+
+    <div class="nhsuk-grid-column-full">
+
+      <details class="nhsuk-details nhsuk-expander">
+        <summary class="nhsuk-details__summary">
+          <span class="nhsuk-details__summary-text">
+            Preset Examples
+          </span>
+        </summary>
+        <div class="nhsuk-details__text">
+          <table>
+            <tbody>
+              <tr>
+                <th><strong>Name</strong></th>
+                <th><strong>NHS ID</strong></th>
+                <th></th>
+              </tr>
+              <tr>
+                <td>Frank FOWLER</td>
+                <td>9658499015</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-fowler" type="button" nhsid="9658499015">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Stan VOS</td>
+                <td>9658499805</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-vos" type="button" nhsid="9658499805">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Eileen GARVEY</td>
+                <td>9658499554</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" nhsid="9658499554">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Freda TOMSON</td>
+                <td>9658499953</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" nhsid="9658499953">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Carl KIDDIE (Karl)</td>
+                <td>Missing</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" firstname="Carl" surname="KIDDIE">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Geoff LEVEY (Jeff)</td>
+                <td>Missing</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" firstname="Geoff" surname="LEVEY">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Linda BONNEY (Lynda)</td>
+                <td>Missing</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" firstname="Linda" surname="BONNEY">
+                    Search
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>Jane FENNEY (Jayne)</td>
+                <td>Missing</td>
+                <td>
+                  <button class="nhsuk-button btn-preset btn-garvey" type="button" firstname="Jane" surname="FENNEY">
+                    Search
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <form action="" method="" id="form-patient-details" class="form-patient-details">
+
+      <fieldset class="nhsuk-fieldset">
+        <legend class="nhsuk-fieldset__legend nhsuk-fieldset__legend--xl">
+          <h2 class="nhsuk-fieldset__heading">
+            Patient details
+          </h2>
+        </legend>
+
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-full">
+
+            <div class="nhsuk-grid-row">
+              <div class="nhsuk-grid-column-one-half">
+
+
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="title">
+                        Title
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="title" name="title" type="text" readonly>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="firstname">
+                        First name
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="firstname" name="firstname" type="text">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="surname">
+                        Last name
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="surname" name="surname" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="other_given_name">
+                        Other given name
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="other_given_name" name="other_given_name" type="text" readonly>
+                    </div>
+                  </div>
+                </div>
+
+<!--                 <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="input-width-10">
+                        Age
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="input-width-10" name="test-width-10" type="text">
+                    </div>
+                  </div>
+                </div> -->
+                
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="dob">
+                        Date of birth
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="dob" name="dob" type="text" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- end column-one-half -->
+
+              <div class="nhsuk-grid-column-one-half">
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="post_code">
+                        Post code
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="post_code" name="post_code" type="text" readonly>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nhsuk-form-group">
+
+                  <fieldset class="nhsuk-fieldset" aria-describedby="example-hint">
+
+                    <div class="nhsuk-grid-row">
+                      <div class="nhsuk-grid-column-one-third">
+                        <legend class="nhsuk-fieldset__legend">
+                          Gender
+                        </legend>
+                      </div>
+
+                      <div class="nhsuk-grid-column-two-thirds">
+                        <div class="nhsuk-radios">
+                          <div class="nhsuk-radios__item uec-inline-block">
+                            <input class="nhsuk-radios__input" id="Male" name="gender" type="radio" value="Male" readonly>
+                            <label class="nhsuk-label nhsuk-radios__label" for="Male">
+                              Male
+                            </label>
+                          </div>
+                          <div class="nhsuk-radios__item uec-inline-block">
+                            <input class="nhsuk-radios__input" id="Female" name="gender" type="radio" value="Female" readonly>
+                            <label class="nhsuk-label nhsuk-radios__label" for="Female">
+                              Female
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                </div>
+                
+
+                <div class="nhsuk-form-group">
+
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+
+                      <label class="nhsuk-label" for="addr4">
+                        Patient address
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <textarea class="nhsuk-textarea" id="addr4" name="addr4" rows="5" aria-describedby="more-detail-hint" readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+                
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="input-gp-name">
+                        GP Name
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="input-gp-name" name="input-gp-name" type="text" readonly>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="more-detail">
+                        GP Address
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <textarea class="nhsuk-textarea" id="textarea-gp-address" name="textarea-gp-address" rows="3" aria-describedby="more-detail-hint" readonly></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="nhsuk-form-group">
+                  <div class="nhsuk-grid-row">
+                    <div class="nhsuk-grid-column-one-third">
+                      <label class="nhsuk-label" for="nhsid">
+                        NHS number
+                      </label>
+                    </div>
+                    <div class="nhsuk-grid-column-two-thirds">
+                      <input class="nhsuk-input nhsuk-input--width-10" id="nhsid" name="nhsid" type="text">
+                    </div>
+                  </div>
+                </div>
+
+
+              </div> <!-- end column-one-half -->
+
+            </div> <!-- end nhsuk grid row -->
+
+
+          </div> <!-- end nhsuk-grid-column-full -->
+        </div> <!-- end nhsuk-grid-row -->
+
+
+        <div class="nhsuk-grid-row">
+          <div class="nhsuk-grid-column-full">
+            
+            <button class="nhsuk-button" type="button" id="btn-reset">
+              Reset form
+            </button>
+
+            <button class="nhsuk-button" type="button" id="btn-trace">
+              Trace on first and last name
+            </button>
+
+            <button class="nhsuk-button" type="button" id="btn-nhsid">
+              Search by NHS ID
+            </button>
+
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+
+
+  <div class="nhsuk-grid-row">
+    <div class="nhsuk-grid-column-full">
+      <label class="nhsuk-label" for="result">
+        Result from api call
+      </label>
+      <textarea class="nhsuk-textarea" id="result" name="result" rows="3" aria-describedby="more-detail-hint"></textarea>
+    </div>
+  </div>
+
+      <!-- End of content -->
+
+    </div>  
+
+  </div>
+  {% endblock %}

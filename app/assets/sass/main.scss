@@ -1,0 +1,36 @@
+// Import NHS.UK frontend library
+@import 'node_modules/nhsuk-frontend/packages/nhsuk';
+
+// Components that are not in the NHS.UK frontend library
+@import 'components/panel-confirmation';
+@import 'components/related-nav';
+
+///////////////////////////////////////////
+// Add your custom CSS/Sass styles below... 
+///////////////////////////////////////////
+
+
+.uec-inline-block{
+	display: inline-block;
+}
+
+
+.nhsuk-textarea{
+	margin-bottom: 0;
+}
+
+.nhsuk-radios__item{
+	margin-bottom: 0;
+}
+
+
+.btn-preset{
+	margin-bottom: 0;
+	padding: 4px 16px;
+}
+
+
+.preset-wrapper th, 
+.preset-wrapper td{
+	padding: 6px;
+}
