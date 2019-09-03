@@ -27,7 +27,7 @@ $('.btn-preset').click(function() {
 		var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+nhsid+"\n   }\n }\n}"
 
 		$('#form-patient-details').trigger("reset");
-		$('#nhsid').val($(this).attr('nhsid') );
+		$('#nhs_id').val($(this).attr('nhsid') );
 		callApi(data);
 	}
 
@@ -49,10 +49,14 @@ $('.btn-preset').click(function() {
 
 $('#btn-nhsid').click(function() {
 
-	var nhsid = $('#nhsid').val();
-	var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+nhsid+"\n   }\n }\n}"
+	var nhsid = $('#nhs_id').val();
+	if(nhsid.length !== 0){
+		var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+nhsid+"\n   }\n }\n}"
+		callApi(data);
+	}else{
+		$('#result').val('Please enter an NHS number.');
+	}
 
-	callApi(data);
 });
 
 
@@ -94,10 +98,11 @@ function callApi(data){
 		console.log(result);
 		$('#result').val(JSON.stringify(result));
 
-		if (result !== undefined || result !== null || result.length !== 0){
+		if (!(result.hasOwnProperty("errorType"))){
+		// if (result !== undefined || result !== null || result.length !== 0 || !(result.hasOwnProperty("errorType"))){
 			
 			//check if its an nhs id or full record
-			if(result.nhs_id){
+			if(result.nhs_id && !result.firstname){
 				console.log("result.nhs_id: "+result.nhs_id);
 				var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+result.nhs_id+"\n   }\n }\n}"
 				callApi(data);
@@ -106,7 +111,7 @@ function callApi(data){
 			//populate patient form
 			populateForm($('#form-patient-details'),result);
 		}else{
-			$('#result').val.append('<p>No result found!</p>');
+			$('#result').val('No result found\n' + JSON.stringify(result));
 		}
 	});
 }
@@ -124,6 +129,12 @@ function populateForm(form, data) {
 
 	// console.log("address: "+address);
 
+	//gp details missing from api, set some fake ones
+	data.gp_name = "Hibaldstow Medical Practice";
+	data.gp_address = "11 Church Street \nHibaldstow \nBrigg \nLincolnshire \nDN20 9ED";
+
+
+
 	$('#form-patient-details').trigger("reset");
 	$.each(data, function(key, value) {  
 		var ctrl = $('[name='+key+']', form);  
@@ -138,6 +149,10 @@ function populateForm(form, data) {
         	ctrl.each(function() {
         		if($(this).attr('name') == 'addr4'){
         			$(this).val(address);
+        		} 
+
+        		if($(this).attr('name') == 'gp_address'){
+        			$(this).val(data.gp_address);
         		} 
         	});
         	break;  
