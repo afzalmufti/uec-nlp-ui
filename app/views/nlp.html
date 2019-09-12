@@ -1,0 +1,153 @@
+<!-- Extends the layout from /views/layout.html -->
+{% extends 'layout.html' %}
+<!-- 
+  In /views/layout.html you can:
+    - change the header and footer 
+    - add custom CSS and JavaScript
+  -->
+
+  <!-- Set the page title inside the pageTitle block -->
+  {% block pageTitle %}
+  UEC NLP User Interface 
+  {% endblock %}
+
+  <!-- Breadcrumb goes inside the beforeContent block -->
+  <!-- More info and code for the breadcrumb can be found at https://beta.nhs.uk/service-manual/styles-components-patterns/breadcrumbs -->
+  {% block beforeContent %}
+  {{ breadcrumb({
+    href: "/",
+    text: "Home"
+  }) }}
+  {% endblock %}
+
+  <!-- Your page content goes inside the content block -->
+  <!-- More info and code for the page layout can be found at https://beta.nhs.uk/service-manual/styles-components-patterns/layout -->
+  {% block content %}
+
+
+  <h1>Natural Language Processing, voice user interface prototype</h1>
+
+  <p>This prototype aims to use conversational AI to automate the identification of a caller while in a queuing scenario waiting to be connected to a call handler. </p>
+  
+  <h2>Instructions</h2>
+  <ol>
+    <li>Dial <a href="tel:">0113 123 456</a> to access the voice user interface.</li>
+    <li>You will be asked a series of questions, if you are calling about yourself or somebody else, your name and date of birth.</li>
+    <li>The voice model is trained on a pre-populated database of xx entries of which the NLP model will attempt to match the submitted details to. If a match is found, the NHS number will be read back to you to illustrate this match. Some test data entries are listed below for you to try.</li>
+    <li>Once completed, you may proceed to the <a href="/interface">call handler interface demo</a> to retrieve the call from the queue with demographic details populated or an option to correct the name or date of birth.</li>
+  </ol>
+
+
+
+  <details class="nhsuk-details nhsuk-expander">
+    <summary class="nhsuk-details__summary">
+      <span class="nhsuk-details__summary-text">
+        Sample patient data
+      </span>
+    </summary>
+    <div class="nhsuk-details__text">
+  <table>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Date of birth</th>
+      <th>NHS Number</th>
+    </tr>
+    <tr>
+      <td>Adrian</td>
+      <td>Dyball</td>
+      <td>29/10/1932</td>
+      <td>9658499007</td>
+    </tr>
+    <tr>
+      <td>Frank</td>
+      <td>Fowler</td>
+      <td>07/06/1921</td>
+      <td>9658499015</td>
+    </tr>
+    <tr>
+      <td>Dudley</td>
+      <td>Swain</td>
+      <td>03/10/1931</td>
+      <td>9658499023</td>
+    </tr>
+    <tr>
+      <td>Jeremy</td>
+      <td>Webber</td>
+      <td>19/12/1934</td>
+      <td>9658499031</td>
+    </tr>
+    <tr>
+      <td>Josiah</td>
+      <td>Murry</td>
+      <td>10/08/1918</td>
+      <td>9658499058</td>
+    </tr>
+    <tr>
+      <td>Irving</td>
+      <td>Marsh</td>
+      <td>15/06/1937</td>
+      <td>9658499066</td>
+    </tr>
+    <tr>
+      <td>Horton</td>
+      <td>Povah</td>
+      <td>15/07/1938</td>
+      <td>9658499074</td>
+    </tr>
+    <tr>
+      <td>Levi</td>
+      <td>Mccann</td>
+      <td>08/07/1934</td>
+      <td>9658499082</td>
+    </tr>
+    <tr>
+      <td>Claude</td>
+      <td>Driver</td>
+      <td>29/04/1934</td>
+      <td>9658499090</td>
+    </tr>
+    <tr>
+      <td>Peter</td>
+      <td>Lymer</td>
+      <td>07/09/1948</td>
+      <td>9658499104</td>
+    </tr>
+    <tr>
+      <td>Daphne</td>
+      <td>TAFT</td>
+      <td>16/03/1919</td>
+      <td>9658499112</td>
+    </tr>
+    <tr>
+      <td>Verena</td>
+      <td>Mcgurk</td>
+      <td>28/03/1940</td>
+      <td>9658499120</td>
+    </tr>
+    <tr>
+      <td>Ellice</td>
+      <td>Gilroy</td>
+      <td>24/02/1929</td>
+      <td>9658499139</td>
+    </tr>
+    <tr>
+      <td>Violet</td>
+      <td>Cook</td>
+      <td>08/02/1922</td>
+      <td>9658499147</td>
+    </tr>
+    <tr>
+      <td>Joyce</td>
+      <td>Coyne</td>
+      <td>22/01/1933</td>
+      <td>9658499155</td>
+    </tr>
+  </table>
+</div>
+</details>
+
+
+
+
+  {% endblock %}

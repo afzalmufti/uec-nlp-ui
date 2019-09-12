@@ -20,6 +20,51 @@
 // }
 
 
+// $ curl -X GET https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller -H "authorizationToken: allow" -d '{"Details":{"Parameters":{"action":"list" }}}'
+
+
+//  curl -X GET https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller -H "authorizationToken: allow" -d '{"Details":{"Parameters":{"action":"get", "key":"f7a6e916-a95b-488c-abc4-080f81501404" }}}'
+
+
+//http://localhost:3000/interface?title=mr&firstname=test&other_given_name=&input-last-name=&dob=&post_code=&patient_address=&input-gp-name=&textarea-gp-address=&input-nhs-number=
+
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+   // console.log("urlParams: "+JSON.stringify(urlParams));
+
+   var pathname = window.location.pathname;
+   // console.log("pathname: "+pathname);
+
+   if(pathname == "/simple" || pathname == "/advanced") {
+   		if(urlParams.n){
+	   		console.log("Set name to: "+urlParams.n);
+			$('.patient-details-name').html(urlParams.n);
+   		}
+   }
+})();
+
+
+$('.btn-refresh-call-list').click(function() {
+	console.log('call list refresh clicked');
+
+	var url = "https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller"
+	var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"list\"\n   }\n }\n}"
+	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"key\": \"ff0bf6fd-dff7-4758-a38d-c99205e5e868\"\n   }\n }\n}"
+	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"get\",\n   \"key\": \"ff0bf6fd-dff7-4758-a38d-c99205e5e868\"\n   }\n }\n}"
+	callApi(data, url);
+});
+
+
+
 $('.btn-preset').click(function() {
 
 	if($(this).attr('nhsid')){
@@ -76,7 +121,7 @@ $('#btn-reset').click(function() {
 });
 
 
-function callApi(data){
+function callApi(data, url){
 	$('#result').text('loading . . .');
 
 	var settings = {
@@ -86,11 +131,15 @@ function callApi(data){
 		"method": "POST",
 		"dataType":"json",
 		"headers": {"authorizationToken": "allow"},
+
 		"data": "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": 9658499805\n   }\n }\n}"
 	}
 
 	if(data){
 		settings.data = data;
+	}
+	if(url){
+		settings.url = url;
 	}
 	console.log(settings.data);
 
