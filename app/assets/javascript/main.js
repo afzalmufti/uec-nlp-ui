@@ -60,7 +60,20 @@ $('.btn-refresh-call-list').click(function() {
 	var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"list\"\n   }\n }\n}"
 	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"key\": \"ff0bf6fd-dff7-4758-a38d-c99205e5e868\"\n   }\n }\n}"
 	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"get\",\n   \"key\": \"ff0bf6fd-dff7-4758-a38d-c99205e5e868\"\n   }\n }\n}"
-	callApi(data, url);
+	callApi(data, 'list');
+});
+
+
+$(document).on('click', '.btn-triage', function(){ 
+// $('.btn-triage').click(function() {
+	console.log('triage clicked');
+
+	var key = $(this).attr('key');
+
+	var url = "https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller"
+	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"list\"\n   }\n }\n}"
+	var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"get\",\n   \"key\": \""+key+"\"\n   }\n }\n}"
+	callApi(data, 'triage');
 });
 
 
@@ -73,7 +86,7 @@ $('.btn-preset').click(function() {
 
 		$('#form-patient-details').trigger("reset");
 		$('#nhs_id').val($(this).attr('nhsid') );
-		callApi(data);
+		callApi(data, 'nhsid');
 	}
 
 	if($(this).attr('firstname')){
@@ -97,7 +110,7 @@ $('#btn-nhsid').click(function() {
 	var nhsid = $('#nhs_id').val();
 	if(nhsid.length !== 0){
 		var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+nhsid+"\n   }\n }\n}"
-		callApi(data);
+		callApi(data, 'nhsid');
 	}else{
 		$('#result').val('Please enter an NHS number.');
 	}
@@ -112,7 +125,7 @@ $('#btn-trace').click(function() {
 	var surname = $('#surname').val().toUpperCase();
 	var data = "{\"Details\": {\"Parameters\": {\"firstname\": \""+firstname+"\", \"surname\": \""+surname+"\"} } }"
 	console.log(data);
-	callApi(data);
+	callApi(data, 'trace');
 });
 
 
@@ -121,7 +134,7 @@ $('#btn-reset').click(function() {
 });
 
 
-function callApi(data, url){
+function callApi(data, action){
 	$('#result').text('loading . . .');
 
 	var settings = {
@@ -138,10 +151,14 @@ function callApi(data, url){
 	if(data){
 		settings.data = data;
 	}
-	if(url){
-		settings.url = url;
+	if(action == 'list' || action == 'triage'){
+		settings.url = "https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller"
 	}
-	console.log(settings.data);
+	if(action == 'nhsid'){
+
+	}
+	if(action == 'trace'){}
+	console.log('action: '+action);
 
 	$.ajax(settings).done(function (result) {
 		console.log(result);
@@ -151,14 +168,38 @@ function callApi(data, url){
 		// if (result !== undefined || result !== null || result.length !== 0 || !(result.hasOwnProperty("errorType"))){
 			
 			//check if its an nhs id or full record
-			if(result.nhs_id && !result.firstname){
+			if(result.nhs_id && action == 'trace'){
 				console.log("result.nhs_id: "+result.nhs_id);
 				var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+result.nhs_id+"\n   }\n }\n}"
-				callApi(data);
+				callApi(data, 'nhsid');
 			}
 
-			//populate patient form
-			populateForm($('#form-patient-details'),result);
+			if(action == 'trace' && result.firstname){
+				//populate patient form
+				populateForm($('#form-patient-details'),result);
+			}
+			
+			if(action == 'list' || action == 'triage' ){
+				$.each(result, function(index, value){
+							index++;
+							console.log('value[0]: '+value[0])
+							console.log('value[1]: '+value[1])
+
+							var date = new Date(value[1]); // parses ISO 8601
+							console.log('getHours(): '+date.getHours());
+							console.log('getMinutes(): '+date.getMinutes());
+							console.log('getSeconds(): '+date.getSeconds());
+							console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" ");
+
+							  $(".call-queue").append('<tr><td>Caller '+index+'</td><td>'+value[1]+'</td><td><button class=\"nhsuk-button btn-triage\" type=\"button\" key=\"'+value[0]+'\">Start triage</button>');
+
+							// value.forEach(function(item){
+							// });
+				            // $(".call-queue").append(index + ": " + value + '<br>');
+				        });
+			}
+
+
 		}else{
 			$('#result').val('No result found\n' + JSON.stringify(result));
 		}
