@@ -56,6 +56,8 @@ var urlParams;
 $('.btn-refresh-call-list').click(function() {
 	console.log('call list refresh clicked');
 
+	$(".call-queue").empty();
+
 	var url = "https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller"
 	var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"action\": \"list\"\n   }\n }\n}"
 	// var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"key\": \"ff0bf6fd-dff7-4758-a38d-c99205e5e868\"\n   }\n }\n}"
@@ -167,38 +169,52 @@ function callApi(data, action){
 		if (!(result.hasOwnProperty("errorType"))){
 		// if (result !== undefined || result !== null || result.length !== 0 || !(result.hasOwnProperty("errorType"))){
 			
-			//check if its an nhs id or full record
 			if(result.nhs_id && action == 'trace'){
 				console.log("result.nhs_id: "+result.nhs_id);
 				var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+result.nhs_id+"\n   }\n }\n}"
 				callApi(data, 'nhsid');
 			}
 
-			if(action == 'trace' && result.firstname){
+			if(action == 'nhsid' && result.firstname){
 				//populate patient form
 				populateForm($('#form-patient-details'),result);
 			}
 			
-			if(action == 'list' || action == 'triage' ){
+			if(action == 'list'){
+
+				
+				//Sort results by date field
+				sortByKey(result,1);
+
+
 				$.each(result, function(index, value){
 							index++;
-							console.log('value[0]: '+value[0])
-							console.log('value[1]: '+value[1])
 
+							//make the date string readable
 							var date = new Date(value[1]); // parses ISO 8601
-							console.log('getHours(): '+date.getHours());
-							console.log('getMinutes(): '+date.getMinutes());
-							console.log('getSeconds(): '+date.getSeconds());
-							console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+" ");
+							var nicedate = date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()+"&nbsp;&nbsp;&nbsp;"+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
 
-							  $(".call-queue").append('<tr><td>Caller '+index+'</td><td>'+value[1]+'</td><td><button class=\"nhsuk-button btn-triage\" type=\"button\" key=\"'+value[0]+'\">Start triage</button>');
+							// console.log(date.getHours()+':'+date.getMinutes()+':'+date.getSeconds()+" "+date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear());
 
-							// value.forEach(function(item){
-							// });
-				            // $(".call-queue").append(index + ": " + value + '<br>');
+							  $(".call-queue").append('<tr><td>Caller '+index+'</td><td>'+nicedate+'</td><td><button class=\"nhsuk-button btn-triage\" type=\"button\" key=\"'+value[0]+'\">Start triage</button>');
 				        });
 			}
+			if(action == 'triage' ){
+				//result is not an object here
+				var obj = JSON.parse(result);
 
+				if(obj.NHSID){
+					//fix nhsid returned here has spaces, remove them and do a trace
+					var nhsid = obj.NHSID.split(' ').join('')
+					console.log('nospaces: '+nhsid);
+					var data = "{\n \"Details\": {\n   \"Parameters\": {\n           \"nhs_id\": "+nhsid+"\n   }\n }\n}"
+					callApi(data, 'nhsid');
+
+				}else if(obj.firstname){
+					console.log('no nhsid');
+					populateForm($('#form-patient-details'),obj);
+				}
+			}
 
 		}else{
 			$('#result').val('No result found\n' + JSON.stringify(result));
@@ -251,3 +267,19 @@ function populateForm(form, data) {
         }  
     });  
 }
+
+function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+}
+
+
+
+$(document).ready(function() {
+
+
+	$('.btn-refresh-call-list').click();
+
+});
