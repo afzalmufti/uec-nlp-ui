@@ -27,14 +27,27 @@
 
   <h1>Natural Language Processing, voice user interface prototype</h1>
 
-  <p>This prototype uses conversational AI to automate the identification of a caller while in a queuing scenario waiting to be connected to a call handler. </p>
+  <p>This prototype uses conversational AI to automate the identification of a caller in an NHS 111 call.</p>
   
   <h2>Instructions</h2>
   <ol>
-    <li>Dial <a href="tel:">01253 33 55 66</a> to access the voice user interface.</li>
-    <li>You will be asked a series of questions, if you are calling about yourself or somebody else, your name and date of birth.</li>
+    <li>Dial <a href="tel:01253335566">01253 33 55 66</a> to access the voice user interface.</li>
+<!--     <li>You will be asked a series of questions, if you are calling about yourself or somebody else, your name and date of birth.</li>
     <li>The voice model is trained on a pre-populated database of 160 entries of which the NLP model will attempt to match the submitted details to. If a match is found, the NHS number will be read back to you to illustrate this match. Some test data entries are listed below for you to try.</li>
-    <li>Once completed, you may proceed to the <a href="/interface">call handler interface demo</a> to retrieve the call from the queue with the demographic details populated or the ability to correct the details and manually perform the demographic trace.</li>
+    <li>Once completed, you may proceed to the <a href="/interface">call handler interface demo</a> to retrieve the call from the queue with the demographic details populated or the ability to correct the details and manually perform the demographic trace.</li> -->
+    <li>You will be asked a series of questions - answer as you would on a 'real' call:
+        <ul>
+            <li>Are you calling about yourself or somebody else?</li>
+            <li>First name</li>
+            <li>Last name</li>
+            <li>Date of birth</li>
+        </ul>
+    <li>The voice model is trained on a pre-populated database of 160 entries which the NLP model will attempt to match the submitted details to. Some sample data entries are listed below for you to try.</li> 
+        <ul>
+            <li>If a match is found, the NHS number will be read back to you to illustrate this match.</li>
+            <li>If a match is not found or if it cannot understand you, you will hear what it has understood.</li>
+        </ul>
+    <li>Once completed, proceed to the <a href="/interface">call handler interface demo</a> to retrieve the call from the queue with the demographic details populated or the ability to correct the details and manually perform the demographic trace.</li>
   </ol>
 
 
@@ -42,7 +55,7 @@
   <details class="nhsuk-details nhsuk-expander">
     <summary class="nhsuk-details__summary">
       <span class="nhsuk-details__summary-text">
-        Sample patient data
+        View sample patient data
       </span>
     </summary>
     <div class="nhsuk-details__text">
@@ -97,7 +110,7 @@
     </tr>
     <tr>
       <td>Levi</td>
-      <td>Mccann</td>
+      <td>McCann</td>
       <td>08/07/1934</td>
       <td>9658499082</td>
     </tr>
@@ -115,13 +128,13 @@
     </tr>
     <tr>
       <td>Daphne</td>
-      <td>TAFT</td>
+      <td>Taft</td>
       <td>16/03/1919</td>
       <td>9658499112</td>
     </tr>
     <tr>
       <td>Verena</td>
-      <td>Mcgurk</td>
+      <td>McGurk</td>
       <td>28/03/1940</td>
       <td>9658499120</td>
     </tr>

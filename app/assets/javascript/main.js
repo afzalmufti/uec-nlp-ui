@@ -235,9 +235,11 @@ function populateForm(form, data) {
 
 	// console.log("address: "+address);
 
-	//gp details missing from api, set some fake ones
-	data.gp_name = "Hibaldstow Medical Practice";
-	data.gp_address = "11 Church Street \nHibaldstow \nBrigg \nLincolnshire \nDN20 9ED";
+	if(data.NHSID){
+		//gp details missing from api, set some fake ones, only for present nhs id
+		data.gp_name = "Hibaldstow Medical Practice";
+		data.gp_address = "11 Church Street \nHibaldstow \nBrigg \nLincolnshire \nDN20 9ED";
+	}
 
 
 
