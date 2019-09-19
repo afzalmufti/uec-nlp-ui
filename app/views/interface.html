@@ -29,11 +29,18 @@
     <div class="nhsuk-grid-column-full">
 
 
-
+    <div class="call-queue-section">
+      
     <h2>Call history</h2>
+
+      <!-- Output message here -->
+      <p class="message"></p>
+
     <button class="nhsuk-button btn-preset btn-refresh-call-list" type="button">
       Refresh call list
     </button>
+
+
       <table class="call-queue">
         <tbody>
           <tr>
@@ -44,6 +51,7 @@
         </tbody>
       </table>
       
+    </div>
 
 
 
@@ -376,6 +384,8 @@
 
         <div class="nhsuk-grid-row">
           <div class="nhsuk-grid-column-full">
+            <p>Search for a valid first and last name or enter a valid NHS number.</p>
+            <p class="message"></p>
             
             <button class="nhsuk-button" type="button" id="btn-reset">
               Reset form
@@ -389,7 +399,6 @@
               Search by NHS ID
             </button>
 
-          <p>Search for a valid first and last name or enter a valid NHS number.</p>
 
           </div>
         </div>

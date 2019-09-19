@@ -56,6 +56,8 @@ var urlParams;
 $('.btn-refresh-call-list').click(function() {
 	console.log('call list refresh clicked');
 
+	$('.call-queue-section .message').html('Fetching call queue...');
+
 	$(".call-queue").empty();
 
 	var url = "https://6tc5y47874.execute-api.eu-west-2.amazonaws.com/prod/caller"
@@ -178,6 +180,7 @@ function callApi(data, action){
 			if(action == 'nhsid' && result.firstname){
 				//populate patient form
 				populateForm($('#form-patient-details'),result);
+				$('.form-patient-details .message').html('Trace successful.').removeClass('error').addClass('success');
 			}
 			
 			if(action == 'list'){
@@ -198,6 +201,12 @@ function callApi(data, action){
 
 							  $(".call-queue").append('<tr><td>Caller '+index+'</td><td>'+nicedate+'</td><td><button class=\"nhsuk-button btn-triage\" type=\"button\" key=\"'+value[0]+'\">Start triage</button>');
 				        });
+
+				if(result){
+					$('.call-queue-section .message').html('Fetching call queue... Success').removeClass('error').addClass('success');
+				} else {
+					$('.call-queue-section .message').html('Fetching call queue... No results. Please call the voice interface or try a preset example below.').addClass('error');
+				}
 			}
 			if(action == 'triage' ){
 				//result is not an object here
@@ -212,12 +221,14 @@ function callApi(data, action){
 
 				}else if(obj.firstname){
 					console.log('no nhsid');
+					$('.form-patient-details .message').html('Trace unsuccessful. Please correct the patient details and try again..').removeClass('success').addClass('error');
 					populateForm($('#form-patient-details'),obj);
 				}
 			}
 
 		}else{
 			$('#result').val('No result found\n' + JSON.stringify(result));
+			$('.form-patient-details .message').html('Trace unsuccessful. Please correct the patient details and try again..').removeClass('success').addClass('error');
 		}
 	});
 }
@@ -281,7 +292,7 @@ function sortByKey(array, key) {
 
 $(document).ready(function() {
 
-
+	//auto click on page load
 	$('.btn-refresh-call-list').click();
 
 });
